@@ -2,7 +2,8 @@ from fastapi import FastAPI
 from modules.alpha_vantage_data import router as alpha_router
 from modules.newsapi_data import router as news_router
 from modules.crypto_data import router as crypto_router
-from modules.feed_router import router as feed_router  # <--- nuovo
+from modules.feed_router import router as feed_router  # ✅
+
 import requests
 
 app = FastAPI()
@@ -11,7 +12,7 @@ app = FastAPI()
 app.include_router(alpha_router)
 app.include_router(news_router)
 app.include_router(crypto_router)
-app.include_router(feed_router)  # <--- nuovo
+app.include_router(feed_router)  # ✅
 
 # Rotta principale per test
 @app.get("/")
