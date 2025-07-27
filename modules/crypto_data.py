@@ -13,9 +13,10 @@ def get_bitcoin_price():
         "vs_currencies": "usd"
     }
 
-    response = requests.get(url, params=params)
-    if response.status_code != 200:
-        return {"error": "API request failed"}
-
-    data = response.json()
-    return {"bitcoin": data.get("bitcoin", {})}
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        return {"bitcoin": data.get("bitcoin", {})}
+    except Exception as e:
+        return {"error": f"API request failed: {str(e)}"}
