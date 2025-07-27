@@ -14,3 +14,12 @@ app.include_router(crypto_router)
 @app.get("/")
 def read_root():
     return {"message": "NEUTRON API HUB™ is live!"}
+@app.get("/testbtc")
+def test_btc():
+    import requests
+    r = requests.get("https://neutron-api-hub.onrender.com/crypto/price?symbol=bitcoin")
+    try:
+        prezzo = r.json()
+        return {"BTC_price": prezzo}
+    except:
+        return {"error": "Nessuna risposta dal modulo crypto."}
