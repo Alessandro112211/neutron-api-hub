@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from modules.alpha_vantage_data import router as alpha_router
 from modules.newsapi_data import router as news_router
 from modules.crypto_data import router as crypto_router
+import requests
 
 app = FastAPI()
 
@@ -14,11 +15,12 @@ app.include_router(crypto_router)
 @app.get("/")
 def read_root():
     return {"message": "NEUTRON API HUB™ is live!"}
+
+# Test di connessione al modulo crypto
 @app.get("/testbtc")
 def test_btc():
-    import requests
-    r = requests.get("https://neutron-api-hub.onrender.com/crypto/price?symbol=bitcoin")
     try:
+        r = requests.get("https://neutron-api-hub.onrender.com/crypto")
         prezzo = r.json()
         return {"BTC_price": prezzo}
     except:
